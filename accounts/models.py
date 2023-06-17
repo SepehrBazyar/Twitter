@@ -1,31 +1,38 @@
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser, AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
+
 # Create your models here.
-class MyUser(models.Model):
-    username = models.CharField(
-        max_length=10,
-        unique=True,
-        db_index=True,
-        verbose_name=_("Username"),
-        help_text=_("Username to login and show in the profile"),
-        blank=False,
-        null=False,
-    )
-    password = models.CharField(
-        max_length=128,
-        verbose_name=_("Password"),
-        help_text=_("Password to login and authenticate"),
-        blank=False,
-        null=False,
-    )
-    photo = models.FileField(
-        upload_to="uploads/photos/",
-    )
+class User(AbstractUser):
+
+    age = models.PositiveIntegerField(blank=True, null=True)
+
+    @property
+    def followings_count(self) -> int:
+        return self.followings.count()
+
+    @property
+    def followers_count(self) -> int:
+        return self.followers.count()
+
+
+    class Meta:
+        verbose_name, verbose_name_plural = _("User"), _("Users")
 
 
 class Relation(models.Model):
-    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="followings")
-    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="followers")
-    created_at = models.DateTimeField(auto_now_add=True)
+
+    from_user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="followings",
+    )
+    to_user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="followers",
+    )
+
+    class Meta:
+        verbose_name, verbose_name_plural = _("Relation"), _("Relations")

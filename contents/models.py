@@ -1,8 +1,12 @@
 from django.db import models
-from core.models import BaseModel, TimeStampMixin
+from core.models import (
+    BaseModel,
+    SoftDeleteModel,
+    TimeStampMixin,
+)
 
 # Create your models here.
-class Post(TimeStampMixin, BaseModel):
+class Post(TimeStampMixin, SoftDeleteModel):
     text = models.TextField()
     user = models.ForeignKey(
         "accounts.User",
@@ -10,27 +14,24 @@ class Post(TimeStampMixin, BaseModel):
         related_name="posts",
     )
 
-    def is_liked_by_user(self, user) -> bool:
-        return self.reaction_set.filter(user=user).exists()
 
-
-class Tag(models.Model):
+class Tag(BaseModel):
     text = models.CharField(max_length=10)
     posts = models.ManyToManyField(Post, related_name="tags")
 
 
-class Image(models.Model):
-    image = models.FileField(upload_to="uploads/images/")
-    post = models.ForeignKey(Post, related_name="images", on_delete=models.CASCADE)
-
-
-class Comment(models.Model):
+class Comment(BaseModel):
     text = models.CharField(max_length=128)
-    user = models.ForeignKey("accounts.User")
-    post = models.ForeignKey(Post)
-    reply_to = models.ForeignKey("self", blank=True, null=True)
+    user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    reply_to = models.ForeignKey(
+        "self",
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+    )
 
 
 class Reaction(BaseModel):
-    user = models.ForeignKey("accounts.User")
-    post = models.ForeignKey(Post)
+    user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
