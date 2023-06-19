@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from core.models import (
     BaseModel,
     SoftDeleteModel,
@@ -6,18 +7,33 @@ from core.models import (
 )
 
 # Create your models here.
+class Tag(BaseModel):
+    text = models.CharField(max_length=10)
+
+
 class Post(TimeStampMixin, SoftDeleteModel):
+
+    class Statuses(models.TextChoices):
+        DRAFT = "D", _("Draft")
+        PUBLISHED = "P", _("Published")
+
     text = models.TextField()
     user = models.ForeignKey(
         "accounts.User",
         on_delete=models.CASCADE,
         related_name="posts",
     )
+    status = models.CharField(
+        max_length=1,
+        choices=Statuses.choices,
+        default=Statuses.PUBLISHED,
+    )
+    tags = models.ManyToManyField(Tag, related_name="posts")
 
 
-class Tag(BaseModel):
-    text = models.CharField(max_length=10)
-    posts = models.ManyToManyField(Post, related_name="tags")
+class Image(BaseModel):
+    photo = models.FileField(upload_to="posts/images/")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="images")
 
 
 class Comment(BaseModel):
