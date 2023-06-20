@@ -10,6 +10,9 @@ from core.models import (
 class Tag(BaseModel):
     text = models.CharField(max_length=10)
 
+    def __str__(self) -> str:
+        return self.text
+
 
 class Post(TimeStampMixin, SoftDeleteModel):
 
@@ -29,6 +32,9 @@ class Post(TimeStampMixin, SoftDeleteModel):
         default=Statuses.PUBLISHED,
     )
     tags = models.ManyToManyField(Tag, related_name="posts")
+
+    def __str__(self) -> str:
+        return self.text
 
 
 class Image(BaseModel):
