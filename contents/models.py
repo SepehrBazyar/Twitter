@@ -16,11 +16,15 @@ class Tag(BaseModel):
 
 class Post(TimeStampMixin, SoftDeleteModel):
 
+    class Meta:
+        verbose_name = _("Post")
+        verbose_name_plural = _("Posts")
+
     class Statuses(models.TextChoices):
         DRAFT = "D", _("Draft")
         PUBLISHED = "P", _("Published")
 
-    text = models.TextField()
+    text = models.TextField(verbose_name=_("Title"), help_text=_("Text to display"))
     user = models.ForeignKey(
         "accounts.User",
         on_delete=models.CASCADE,
