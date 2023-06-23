@@ -57,7 +57,7 @@ ROOT_URLCONF = 'twitter.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates/"],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,7 +80,15 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'twitter',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'postgres',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
+    # },
 }
 
 
