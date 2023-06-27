@@ -6,6 +6,7 @@ from .models import Post
 class PostListView(View):
 
     def get(self, request):
+        print(request.user)
         posts = Post.objects.all()
         return render(
             request,
