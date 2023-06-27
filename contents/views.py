@@ -15,3 +15,18 @@ class PostListView(View):
                 "posts":posts,
             },
         )
+
+
+class PostDetailView(View):
+
+    def get(self, request, id):
+        post = Post.objects.get(id=id)
+        comments = post.comment_set.all()
+        return render(
+            request,
+            "contents/detail.html",
+            context={
+                "post":post,
+                "comments":comments,
+            },
+        )

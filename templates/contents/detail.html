@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p>{{ post.user.username }} - {{ post.created_at|date:"Y-M" }}</p>
+<p>{{ post.text }}</p><hr/>
+
+    {% for comment in comments %}
+        <div class="card bg-dark text-white">
+            <p class="card-header">{{ comment.user }} | {{ comment.created|timesince }}</p>
+            <p class="card-body">{{ comment.text }}</p>
+        </div><br/>
+    {% empty %}
+        <p>No comments yet!</p>
+    {% endfor %}
+
+{% endblock %}
