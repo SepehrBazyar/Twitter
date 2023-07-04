@@ -26,6 +26,7 @@ class Post(TimeStampMixin, SoftDeleteModel):
         PUBLISHED = "P", _("Published")
 
     text = models.TextField(verbose_name=_("Title"), help_text=_("Text to display"))
+    title = models.CharField(_("Title"), max_length=124)
     user = models.ForeignKey(
         "accounts.User",
         on_delete=models.CASCADE,
