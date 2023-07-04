@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-20 20:21+0330\n"
+"POT-Creation-Date: 2023-07-04 19:23+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,33 +42,41 @@ msgstr "روابط"
 msgid "Contents"
 msgstr "محتواها"
 
-#: .\contents\models.py:20
+#: .\contents\models.py:21
 msgid "Post"
 msgstr "مطلب"
 
-#: .\contents\models.py:21
+#: .\contents\models.py:22
 msgid "Posts"
 msgstr "مطالب"
 
-#: .\contents\models.py:24
+#: .\contents\models.py:25
 msgid "Draft"
 msgstr "پیشنویس"
 
-#: .\contents\models.py:25
+#: .\contents\models.py:26
 msgid "Published"
 msgstr ""
 
-#: .\contents\models.py:27
+#: .\contents\models.py:28 .\contents\models.py:29
 msgid "Title"
 msgstr "عنوان"
 
-#: .\contents\models.py:27
+#: .\contents\models.py:28
 msgid "Text to display"
 msgstr "متن نمایشی"
 
 #: .\core\apps.py:8
 msgid "Core"
 msgstr ""
+
+#: .\templates\base.html:12
+msgid "Twitter"
+msgstr ""
+
+#: .\templates\contents\detail.html:6
+msgid "Update"
+msgstr "بروز رسانی"
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:15
 msgid "Messages"

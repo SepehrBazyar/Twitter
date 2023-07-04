@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
+
+{% if post.user.id == request.user.id %}
+    <a href="{% url 'contents:update' post.id %}">{% trans "Update" %}</a>
+{% endif %}
 
 <h2>{{ post.title }}</h2><hr/>
 <p>{{ post.user.username }} - {{ post.created_at|date:"Y-M" }}</p>
