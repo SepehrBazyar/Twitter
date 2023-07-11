@@ -11,19 +11,9 @@
 <p>{{ post.user.username }} - {{ post.created_at|date:"Y-M" }}</p>
 <p>{{ post.text }}</p><hr/>
 
-{% if request.user.is_authenticated %}
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ comment_form.as_p }}
-        <input type="submit" value={% trans "Send" %}>
-    </form><br/>
-{% else %}
-    <p class="alert alert-danger">Only logged in users can comment.</p>
-{% endif %}
-
     {% for comment in comments %}
         <div class="card bg-dark text-white">
-            <p class="card-header">{{ comment.user }} | {{ comment.created|timesince }}</p>
+            <p class="card-header">{{ comment.user }} | {{ comment.created_at|timesince }}</p>
             <p class="card-body">{{ comment.text }}</p>
         </div><br/>
     {% empty %}

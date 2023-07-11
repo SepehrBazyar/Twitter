@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Comment
+from .models import Post
 
 
 class PostUpdateForm(forms.ModelForm):
@@ -8,10 +8,3 @@ class PostUpdateForm(forms.ModelForm):
         model = Post
         # fields = ("title", "text")
         exclude = ["user", "is_deleted"]
-
-
-class CommentCreateForm(forms.ModelForm):
-
-    class Meta:
-        model = Comment
-        fields = ("text",)

@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.views import View
 from .models import Post
-from .forms import PostUpdateForm, CommentCreateForm
+from .forms import PostUpdateForm
 
 # Create your views here.
 class PostListView(View):
@@ -26,30 +26,20 @@ class PostListView(View):
 
 class PostDetailView(View):
 
-    comment_form = CommentCreateForm
+    def setup(self, request, id):
+        self.this_post = get_object_or_404(Post, id=id)
+        return super().setup(request, id)
 
     def get(self, request, id):
-        post = get_object_or_404(Post, id=id)
-        comments = post.comment_set.all()
+        comments = self.this_post.comment_set.all()
         return render(
             request,
             "contents/detail.html",
             context={
-                "post":post,
+                "post":self.this_post,
                 "comments":comments,
-                "comment_form": self.comment_form(),
             },
         )
-
-    def post(self, request, id):
-
-        form = self.comment_form(data=request.POST)
-        if form.is_valid():
-            new_comment = form.save(commit=False)
-            new_comment.user = request.user
-            new_comment.post = self.this_post
-            new_comment.save()
-            return redirect('home:post_detail', self.this_post.id)
 
 
 class PostUpdateView(View):
