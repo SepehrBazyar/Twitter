@@ -13,7 +13,7 @@
 
     {% for comment in comments %}
         <div class="card bg-dark text-white">
-            <p class="card-header">{{ comment.user }} | {{ comment.created_at|timesince }}</p>
+            <p class="card-header">{{ comment.user }}</p>
             <p class="card-body">{{ comment.text }}</p>
         </div><br/>
     {% empty %}

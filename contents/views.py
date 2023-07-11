@@ -32,12 +32,10 @@ class PostDetailView(View):
 
     def get(self, request, id):
         comments = self.this_post.comment_set.all()
-        comments = self.this_post.comment_set.all()
         return render(
             request,
             "contents/detail.html",
             context={
-                "post":self.this_post,
                 "post":self.this_post,
                 "comments":comments,
             },
