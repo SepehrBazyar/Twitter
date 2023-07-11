@@ -12,11 +12,11 @@
 <p>{{ post.text }}</p><hr/>
 
 {% if request.user.is_authenticated %}
-    <form action="" method="post">
+    <form id="new-comment">
         {% csrf_token %}
         {{ comment_form.as_p }}
     </form>
-    <button onclick=SendComment()>Send</button>
+    <button onclick="SendComment()">{% trans "Send" %}</button>
 {% endif %}
 
     {% for comment in comments %}
@@ -30,10 +30,12 @@
 
 {% endblock %}
 
-{% block extra_js %}
 <script>
 function SendComment() {
-    
+    $.post(
+        {{ post.get_url }}, $("#new-comment").serialize(), function (result) {
+            console.log("Y");
+        }
+    )
 }
 </script>
-{% endblock %}

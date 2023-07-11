@@ -45,6 +45,7 @@ class PostDetailView(View):
         )
 
     def post(self, request, id):
+        print(request.POST)
         form = self.comment_form(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
