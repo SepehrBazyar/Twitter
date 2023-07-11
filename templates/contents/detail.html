@@ -11,6 +11,14 @@
 <p>{{ post.user.username }}</p>
 <p>{{ post.text }}</p><hr/>
 
+{% if request.user.is_authenticated %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+    </form>
+    <button onclick=SendComment()>Send</button>
+{% endif %}
+
     {% for comment in comments %}
         <div class="card bg-dark text-white">
             <p class="card-header">{{ comment.user }}</p>
@@ -20,4 +28,12 @@
         <p>No comments yet!</p>
     {% endfor %}
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function SendComment() {
+    
+}
+</script>
 {% endblock %}
