@@ -25,8 +25,8 @@ class Post(TimeStampMixin, SoftDeleteModel):
         DRAFT = "D", _("Draft")
         PUBLISHED = "P", _("Published")
 
-    text = models.TextField(verbose_name=_("Title"), help_text=_("Text to display"))
-    title = models.CharField(_("Title"), max_length=124)
+    title = models.CharField(verbose_name=_("Title"), max_length=124)
+    text = models.TextField(verbose_name=_("Body"), help_text=_("Text to display"))
     user = models.ForeignKey(
         "accounts.User",
         on_delete=models.CASCADE,
@@ -51,7 +51,7 @@ class Image(BaseModel):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="images")
 
 
-class Comment(BaseModel):
+class Comment(TimeStampMixin, BaseModel):
     text = models.CharField(max_length=128)
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

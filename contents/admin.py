@@ -14,7 +14,7 @@ class PostAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             None, {
-                'fields': ('text', ('user', 'status', 'is_deleted'), 'tags'),
+                'fields': ('title', 'text', ('user', 'status', 'is_deleted'), 'tags'),
             },
         ),
     )

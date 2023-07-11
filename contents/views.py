@@ -28,14 +28,17 @@ class PostDetailView(View):
 
     comment_form = CommentCreateForm
 
+    def setup(self, request, id):
+        self.this_post = get_object_or_404(Post, id=id)
+        return super().setup(request, id)
+
     def get(self, request, id):
-        post = get_object_or_404(Post, id=id)
-        comments = post.comment_set.all()
+        comments = self.this_post.comment_set.all()
         return render(
             request,
             "contents/detail.html",
             context={
-                "post":post,
+                "post":self.this_post,
                 "comments":comments,
                 "comment_form": self.comment_form(),
             },
@@ -49,7 +52,7 @@ class PostDetailView(View):
             new_comment.user = request.user
             new_comment.post = self.this_post
             new_comment.save()
-            return redirect('home:post_detail', self.this_post.id)
+            return redirect("contents:detail", self.this_post.id)
 
 
 class PostUpdateView(View):
