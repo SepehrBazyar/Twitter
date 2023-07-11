@@ -1,6 +1,6 @@
 from typing import Any
 from django import http
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -45,14 +45,17 @@ class PostDetailView(View):
         )
 
     def post(self, request, id):
-        print(request.POST)
         form = self.comment_form(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.user, comment.post = request.user, self.this_post
             comment.save()
-
-        return redirect("contents:detail", id)
+            return JsonResponse(
+                {
+                    "text": comment.text,
+                    "username": comment.user.username,
+                }
+            )
 
 
 class PostUpdateView(View):
